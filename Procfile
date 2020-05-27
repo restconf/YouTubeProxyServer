@@ -1,1 +1,1 @@
-web: gunicorn src/runner:app --log-file -
+web: gunicorn --chdir srrunner:app --log-file -
