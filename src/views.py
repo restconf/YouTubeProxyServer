@@ -16,6 +16,7 @@ load_dotenv(dotenv_path)
 
 YOUTUBEAPIKEY = os.environ.get("YOUTUBEAPIKEY")
 PASSWORDHASH = os.environ.get("PASSWORDHASH")
+TESTHASH = os.environ.get("TESTHASH")
 
 @app.route('/')
 def show_entries():
@@ -25,7 +26,10 @@ def show_entries():
 
 @app.route("/login_manager", methods=["POST"])
 def login_manager():
-    if hashlib.sha256(request.form["password"].encode()).hexdigest() == PASSWORDHASH:
+    if request.form["name"]=="admin" and hashlib.sha256(request.form["password"].encode()).hexdigest() == PASSWORDHASH:
+        session['name'] = request.form['name']
+        return flask.render_template('root.html')
+    if request.form["name"]=="Test" and hashlib.sha256(request.form["password"].encode()).hexdigest() == TESTHASH:
         session['name'] = request.form['name']
         return flask.render_template('root.html')
     return "That account is not registered"
