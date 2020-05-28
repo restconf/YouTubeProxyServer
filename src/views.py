@@ -9,6 +9,7 @@ from flask import request
 from flask import session
 from os.path import join, dirname
 from dotenv import load_dotenv
+from src import models
 from src import app
 
 dotenv_path = join(dirname(__file__), '.env')
@@ -26,10 +27,10 @@ def show_entries():
 
 @app.route("/login_manager", methods=["POST"])
 def login_manager():
-    if request.form["name"]=="admin" and hashlib.sha256(request.form["password"].encode()).hexdigest() == PASSWORDHASH:
+    if request.form["name"] == "admin" and hashlib.sha256(request.form["password"].encode()).hexdigest() == PASSWORDHASH:
         session['name'] = request.form['name']
         return flask.render_template('root.html')
-    if request.form["name"]=="Test" and hashlib.sha256(request.form["password"].encode()).hexdigest() == TESTHASH:
+    if request.form["name"] == "Test" and hashlib.sha256(request.form["password"].encode()).hexdigest() == TESTHASH:
         session['name'] = request.form['name']
         return flask.render_template('root.html')
     return "That account is not registered"
@@ -44,6 +45,13 @@ def search():
     if 'name' in session:
         api_response = requests.get(f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={request.form['keyword']}&key={YOUTUBEAPIKEY}").text
         return flask.render_template('movie.html', link=get_url(api_response))
+    return flask.render_template('login.html')
+
+@app.route("/register", methods=["POST"])
+def search():
+    user = models.Entry(user_name=request.form['user_name'], password=request.form['password'])
+    models.db.session.add(user)
+    models.db.session.commit()
     return flask.render_template('login.html')
 
 def get_url(response:str):
