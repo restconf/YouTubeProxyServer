@@ -21,38 +21,41 @@ TESTHASH = os.environ.get("TESTHASH")
 
 @app.route('/')
 def show_entries():
-    if 'name' in session:
+    if 'user_name' in session:
         return flask.render_template('root.html')
     return flask.render_template('login.html')
 
 @app.route("/login_manager", methods=["POST"])
 def login_manager():
-    if request.form["name"] == "admin" and hashlib.sha256(request.form["password"].encode()).hexdigest() == PASSWORDHASH:
-        session['name'] = request.form['name']
-        return flask.render_template('root.html')
-    if request.form["name"] == "Test" and hashlib.sha256(request.form["password"].encode()).hexdigest() == TESTHASH:
-        session['name'] = request.form['name']
+    if models.Entry.query.filter_by(user_name=request.form['user_name']).first().password == hashlib.sha256(request.form["password"].encode()).hexdigest():
+        session['user_name'] = request.form['user_name']
         return flask.render_template('root.html')
     return "That account is not registered"
 
 @app.route("/logout_manager", methods=["POST"])
 def logout_manager():
-    session.pop('name', None)
+    session.pop('user_name', None)
     return flask.render_template('login.html')
 
 @app.route("/search", methods=["POST"])
 def search():
-    if 'name' in session:
+    if 'user_name' in session:
         api_response = requests.get(f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={request.form['keyword']}&key={YOUTUBEAPIKEY}").text
         return flask.render_template('movie.html', link=get_url(api_response))
     return flask.render_template('login.html')
 
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=["GET","POST"])
 def register():
-    user = models.Entry(user_name=request.form['user_name'], password=request.form['password'])
-    models.db.session.add(user)
-    models.db.session.commit()
-    return flask.render_template('login.html')
+    if request.method == "POST":
+        if models.Entry.query.filter_by(user_name=request.form['user_name']).count() == 0:
+            user = models.Entry(user_name=request.form['user_name'], password=hashlib.sha256(request.form['password'].encode()).hexdigest())
+            models.db.session.add(user)
+            models.db.session.commit()
+            return flask.render_template('login.html')
+        else:
+            return flask.render_template('register.html')
+    else:
+        return flask.render_template('register.html')
 
 def get_url(response:str):
     try:
