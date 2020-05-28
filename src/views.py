@@ -48,7 +48,7 @@ def search():
     return flask.render_template('login.html')
 
 @app.route("/register", methods=["POST"])
-def search():
+def register():
     user = models.Entry(user_name=request.form['user_name'], password=request.form['password'])
     models.db.session.add(user)
     models.db.session.commit()
