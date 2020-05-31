@@ -1,5 +1,4 @@
 import os
-import pytube_fork
 import hashlib
 import json
 import flask
@@ -7,7 +6,7 @@ import requests
 from flask import request, session
 from os.path import join, dirname
 from dotenv import load_dotenv
-from src import models, app
+from src import models, app, YouTube
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -44,11 +43,9 @@ def search():
     if 'user_name' in session:
         # Request Google YouTube API for getting video information
         api_response = requests.get(
-            f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={request.form['keyword']}&maxResults=10&key={YOUTUBEAPIKEY}").text
-        a, b = get_url(api_response)
-        print(a)
-        print(b)
-        return flask.render_template('movie.html', link1=a, link2=b)
+            f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={request.form['keyword']}&maxResults=15&key={YOUTUBEAPIKEY}").text
+        yt = YouTube.YouTube(api_response)
+        return flask.render_template('movie.html', links=yt.get_ids())
     # if they aren't logged in
     return flask.render_template('login.html')
 
@@ -90,9 +87,3 @@ def admin_operate_delete():
             models.db.session.commit()
             return flask.render_template('login.html')
     return flask.render_template('login.html')
-
-def get_url(response: str):
-    jsonObj = json.loads(response)
-    link = pytube_fork.YouTube(f"https://www.youtube.com/watch?v={jsonObj['items'][0]['id']['videoId']}")
-    link2 = pytube_fork.YouTube(f"https://www.youtube.com/watch?v={jsonObj['items'][1]['id']['videoId']}")
-    return link.streams.get_by_itag(18).url, link2.streams.get_by_itag(18).url
