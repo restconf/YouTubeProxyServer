@@ -45,10 +45,9 @@ def search():
         api_response = requests.get(
             f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={request.form['keyword']}&maxResults=15&key={YOUTUBEAPIKEY}").text
         yt = YouTube.YouTube(api_response)
-        return flask.render_template('movie.html', links=yt.get_ids())
+        return flask.render_template('movie.html', links=yt.get_ids(), thumbnails=yt.get_Thumbnail())
     # if they aren't logged in
     return flask.render_template('login.html')
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

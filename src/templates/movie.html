@@ -9,7 +9,7 @@
 <div class="windowD">
     <div class="mainD">
         <div class="mainVD">
-            <iframe height="" class="mainVideo" src={{links[0]}} width=""></iframe>
+            <iframe height="" class="mainVideo" src={{links[0]}}></iframe>
         </div>
         <h2>sample</h2>
     </div>
@@ -17,11 +17,12 @@
     <div class="subD" style="text-align:right">
         <h3 text-al>関連動画</h3>
         <div class="subVD">
-            <iframe width="208" height="117" id="subVideo" src={{links[1]}}></iframe>
+            <button type="button" id="subVideo1"><img width="208" height="117" src="https://i.ytimg.com/vi/B2XelKaZ8zc/hqdefault.jpg"></button>
         </div>
         <h4>sample</h4>
     </div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="{{url_for('static', filename='/js/main.js')}}"></script>
 </body>
 </html>
