@@ -61,7 +61,7 @@ def register():
             user = models.Entry_Temp(user_name=request.form['user_name'],  auth_uuid=UUID)
             models.db.session.add(user)
             models.db.session.commit()
-            Email.send_mail(Email.create_message(f"http://0.0.0.0:8000/validate?uuid={UUID}&user_name={request.form['user_name']}&password={request.form['password']}"))
+            Email.send_mail(Email.create_message(f"https://you-tube-proxy.herokuapp.com/validate?uuid={UUID}&user_name={request.form['user_name']}&password={request.form['password']}"))
             return flask.render_template('login.html')
         else:
             # if the same account name already exists
