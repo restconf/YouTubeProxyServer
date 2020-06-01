@@ -1,3 +1,13 @@
-document.getElementById("subVideo1").onclick = function() {
-    $('#subVideo1').html('<iframe width="208" height="117" id="subVideo" src="https://r3---sn-p5qlsndz.googlevideo.com/videoplayback?expire=1590924673&ei=IEHTXp-NOcuXhwbZhL5o&ip=3.80.145.223&id=o-AP5iDdbfjVwTNi_Xjp905DppH9aLu-YcdETki0n6HpZl&itag=18&source=youtube&requiressl=yes&mh=Sk&mm=31%2C26&mn=sn-p5qlsndz%2Csn-vgqsrne6&ms=au%2Conr&mv=m&mvi=2&pl=12&pcm2=no&initcwndbps=3627500&vprv=1&mime=video%2Fmp4&gir=yes&clen=23817653&ratebypass=yes&dur=278.871&lmt=1573830204402101&mt=1590903031&fvip=3&c=WEB&txp=1311222&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cpcm2%2Cvprv%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgDyc9QTqM__x9TqnCA58ECAXDGKGP_lBacNL1-gFzhTACIQDaGLTr7vcsZB2lxWIB66wFlWLQEILhS3VAZseiA2hkXw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAK3dH3AqfKDbr8gjzKkYotccW3NZQ3MN3GX2vgt8ry7IAiBgK7jPR8u7q_laUv_l4mSWlo1fG2eVRYHRHxLDkjLI2w%3D%3D"></iframe>');
-};
+$(document).on("click", ".mainVideo", function () {
+    var id = $(".mainVideo > img:nth-child(1)").data("id");
+    get_url(id).done(function (data, status, xhr) {
+        console.log(data)
+        $(".mainVD").html(`<iframe class=\"mainVideo\" src=${data}></iframe>`)
+    })
+});
+function get_url(id) {
+    return $.ajax({
+        url: "/find_url_by_id/" + id,
+        method: "GET"
+    })
+}
