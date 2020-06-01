@@ -17,9 +17,7 @@ class YouTube:
 
     def get_ids(self):
         video_ids = []
-        for item in self.jsonObj["items"]:
+        for index, item in enumerate(self.jsonObj["items"]):
             video_ids.append(item["id"]["videoId"])
-        direct_urls = []
-        for id in video_ids:
-            direct_urls.append(pytube_fork.YouTube(f"https://www.youtube.com/watch?v={id}").streams.get_by_itag(18).url)
-        return direct_urls
+        return video_ids
+
