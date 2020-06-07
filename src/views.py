@@ -3,11 +3,11 @@ import hashlib
 import uuid
 import flask
 import requests
-import pytube
 from flask import request, session
 from os.path import join, dirname
 from dotenv import load_dotenv
 from src import models, app, YouTube, Email, pytube_patch
+import pytube
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -25,10 +25,12 @@ def show_entries():
 
 @app.route("/login_manager", methods=["POST"])
 def login_manager():
-    if models.Registered_User.query.filter_by(user_name=request.form['user_name']).first().password == hashlib.sha256(
-            request.form["password"].encode()).hexdigest():
-        session['user_name'] = request.form['user_name']
-        return flask.redirect("/")
+    query = models.Registered_User.query.filter_by(user_name=request.form['user_name'])
+    if query.count() == 1:
+        if query.first().password == hashlib.sha256(
+                request.form["password"].encode()).hexdigest():
+            session['user_name'] = request.form['user_name']
+            return flask.redirect("/")
     return flask.redirect('/login')
 
 @app.route("/login", methods=["GET"])
@@ -71,7 +73,7 @@ def register():
             return flask.redirect("/login")
         else:
             # if the same account name already exists
-            return flask.render_template('/register')
+            return flask.render_template('register.html', errormsg="Try Another Name")
     # if this is requested by GET
     elif request.method == "GET":
         return flask.render_template('register.html')
@@ -98,11 +100,6 @@ def admin_operate_delete():
             return flask.redirect('/login')
     return flask.redirect('/login')
 
-@app.route("/find_url_by_id/<video_id>", methods=["GET"])
-def find_url_by_id(video_id):
-    pytube.__main__.apply_descrambler = pytube_patch.apply_descrambler
-    yt = pytube.YouTube(f"https://www.youtube.com/watch?v={video_id}")
-    return yt.streams.get_by_itag(18).url
 
 @app.route("/validate", methods=["GET"])
 def find_temp_user():
@@ -115,3 +112,15 @@ def find_temp_user():
         models.db.session.add(new_user_info)
         models.db.session.commit()
         return flask.redirect('/login')
+
+@app.route("/find_url_by_id/<video_id>", methods=["GET"])
+def find_url_by_id(video_id):
+    pytube.__main__.apply_descrambler = pytube_patch.apply_descrambler
+    yt = pytube.YouTube(f"https://www.youtube.com/watch?v={video_id}")
+    return yt.streams.get_by_itag(18).url
+
+@app.route("/find_user/<user_name>", methods=["GET"])
+def find_user(user_name):
+    if models.Registered_User.query.filter_by(user_name=user_name).count() == 0:
+        return "0"
+    return "1"
