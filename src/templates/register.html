@@ -6,11 +6,13 @@
 </head>
 <body>
     <form action="/register" method="post">
-        <p>ユーザー名：<br>
+        <p>User Name<br>
         <input type="text" name="user_name"></p>
-        <p>パスワード：<br>
+        <p>Password<br>
         <input type="text" name="password"></p>
-        <p><input type="submit" value="登録する"></p>
+        <p><input type="submit" value="Submit"></p>
     </form>
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="{{url_for('static', filename='/js/register.js')}}"></script>
 </html>
