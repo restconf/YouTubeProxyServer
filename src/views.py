@@ -28,7 +28,13 @@ def login_manager():
     if models.Registered_User.query.filter_by(user_name=request.form['user_name']).first().password == hashlib.sha256(
             request.form["password"].encode()).hexdigest():
         session['user_name'] = request.form['user_name']
-        return flask.render_template('root.html')
+        return flask.redirect("/")
+    return flask.redirect('/login')
+
+@app.route("/login", methods=["GET"])
+def login():
+    if 'user_name' in session:
+        return flask.redirect("/")
     return flask.render_template('login.html')
 
 
@@ -37,7 +43,7 @@ def logout_manager():
     # Delete Cookie that shows server they are logged in
     session.pop('user_name', None)
     # redirect main Page
-    return flask.render_template('login.html')
+    return flask.redirect("/")
 
 
 @app.route("/search", methods=["POST"])
@@ -49,7 +55,7 @@ def search():
         yt = YouTube.YouTube(api_response)
         return flask.render_template('movie.html', ids=yt.get_ids(), thumbnails=yt.get_Thumbnail())
     # if they aren't logged in
-    return flask.render_template('login.html')
+    return flask.redirect("/login")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -62,10 +68,10 @@ def register():
             models.db.session.add(temp_user)
             models.db.session.commit()
             Email.send_mail(Email.create_message(f"https://you-tube-proxy.herokuapp.com/validate?uuid={UUID}&user_name={request.form['user_name']}&password={request.form['password']}"))
-            return flask.render_template('login.html')
+            return flask.redirect("/login")
         else:
             # if the same account name already exists
-            return flask.render_template('register.html')
+            return flask.render_template('/register')
     # if this is requested by GET
     elif request.method == "GET":
         return flask.render_template('register.html')
@@ -76,7 +82,7 @@ def admin_operate():
     if 'user_name' in session:
         if session["user_name"] == "admin":
             return flask.render_template('admin.html')
-    return flask.render_template('login.html')
+    return flask.redirect('/login')
 
 
 @app.route("/delete_accounts", methods=["POST"])
@@ -89,8 +95,8 @@ def admin_operate_delete():
                                 password=hashlib.sha256(os.environ.get("ADMINPASS").encode()).hexdigest())
             models.db.session.add(admin)
             models.db.session.commit()
-            return flask.render_template('login.html')
-    return flask.render_template('login.html')
+            return flask.redirect('/login')
+    return flask.redirect('/login')
 
 @app.route("/find_url_by_id/<video_id>", methods=["GET"])
 def find_url_by_id(video_id):
@@ -108,4 +114,4 @@ def find_temp_user():
         new_user_info = models.Registered_User(user_name=name, password=hashlib.sha256(password.encode()).hexdigest())
         models.db.session.add(new_user_info)
         models.db.session.commit()
-        return flask.render_template('login.html')
+        return flask.redirect('/login')
