@@ -2,29 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ca2e9fe-734a-4ac3-91ed-7edb4149ab40" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pytube_patch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/__main__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/captions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/cipher.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/cli.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/contrib/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/contrib/playlist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/exceptions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/extract.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/helpers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/itags.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/monostate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/query.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/request.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/streams.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytube_fork/version.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/YouTube.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/YouTube.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

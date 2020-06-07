@@ -87,8 +87,8 @@ def admin_operate_delete():
             models.Temp_User.query.delete()
             admin = models.Registered_User(user_name="admin",
                                 password=hashlib.sha256(os.environ.get("ADMINPASS").encode()).hexdigest())
-            models.user_table.session.add(admin)
-            models.user_table.session.commit()
+            models.db.session.add(admin)
+            models.db.session.commit()
             return flask.render_template('login.html')
     return flask.render_template('login.html')
 
