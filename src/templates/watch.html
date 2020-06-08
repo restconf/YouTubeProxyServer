@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).on("click", ".mainVideo", function (e) {
+            get_url("{{ video_id }}").done(function (data, status, xhr) {
+                console.log(data);
+                $(".mainVideo").html(`<iframe src=${data} width="1280" height="720"></iframe>`);
+            })
+        })
+        function get_url(id) {
+            return $.ajax({
+                url: "/find_url_by_id/" + id,
+                method: "GET"
+            })
+        }
+    </script>
+</head>
+<body>
+    <form action="/search" method="get">
+        <p>Search query<br>
+            <input type="text" name="search_query"></p>
+        <p><input type="submit" value="Search!"></p>
+    </form>
+    <button type="button" class="mainVideo"><img src={{thum_url}} width="1280" height="720"></button>
+</body>
+</html>

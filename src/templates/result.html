@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Lists</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    {% for i in ids %}
+    <li><img src={{ thumbnails[loop.index0] }}></li>
+    <script>
+        $("body > li:nth-child({{ loop.index }})").click(function (e) {
+            location.href = "/watch?video_id={{ ids[loop.index0] }}&thum_url={{ thumbnails[loop.index0] }}";
+        })
+    </script>
+    {% endfor %}
+</body>
+</html>
