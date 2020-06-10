@@ -8,6 +8,12 @@ class YouTube:
             if "channelId" in item["id"]:
                 del self.jsonObj["items"][0]
 
+    def get_id_and_thumbnail(self):
+        list = []
+        for item in self.jsonObj["items"]:
+            list.append({"id":item["id"]["videoId"],"thumb":item["snippet"]["thumbnails"]["default"]["url"],"title":item["snippet"]["title"]})
+        return list
+
     def get_Thumbnail(self):
         thumbnail_urls = []
         for item in self.jsonObj["items"]:
@@ -16,7 +22,7 @@ class YouTube:
 
     def get_ids(self):
         video_ids = []
-        for index, item in enumerate(self.jsonObj["items"]):
+        for item in self.jsonObj["items"]:
             video_ids.append(item["id"]["videoId"])
         return video_ids
 

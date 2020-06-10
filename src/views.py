@@ -55,10 +55,11 @@ def search():
     if 'user_name' in session:
         # Request Google YouTube API for getting video information
         search_query = request.args.get("search_query")
+        result_amount = 5
         api_response = requests.get(
-            f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={search_query}&maxResults=15&key={YOUTUBEAPIKEY}").text
+            f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={search_query}&maxResults={result_amount}&key={YOUTUBEAPIKEY}").text
         yt = YouTube.YouTube(api_response)
-        return flask.render_template('result.html', ids=yt.get_ids(), thumbnails=yt.get_Thumbnail())
+        return flask.render_template('result.html', list=yt.get_id_and_thumbnail())
     # if they aren't logged in
     return flask.redirect("/login")
 
@@ -70,7 +71,7 @@ def register():
         if models.Registered_User.query.filter_by(user_name=request.form['user_name']).count() == 0:
             UUID = str(uuid.uuid4())
             temp_user = models.Temp_User(
-                user_name=request.form['user_name'],  auth_uuid=UUID)
+                user_name=request.form['user_name'], auth_uuid=UUID)
             models.db.session.add(temp_user)
             models.db.session.commit()
             Email.send_mail(Email.create_message(
@@ -106,6 +107,16 @@ def admin_operate_delete():
     return flask.redirect('/login')
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return flask.render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return flask.render_template('500.html'), 500
+
+
 @app.route("/validate", methods=["GET"])
 def find_temp_user():
     uuid = request.args.get("uuid")
@@ -127,8 +138,17 @@ def watch():
     if 'user_name' in session:
         return flask.render_template('watch.html', video_id=video_id, thum_url=thum_url)
 
+
 @app.route("/find_url_by_id/<video_id>", methods=["GET"])
 def find_url_by_id(video_id):
+    itag_720p = 22
+    itag_360p = 18
+    itag_240p = 36
+    itag_144p = 17
     pytube.__main__.apply_descrambler = pytube_patch.apply_descrambler
     yt = pytube.YouTube(f"https://www.youtube.com/watch?v={video_id}")
-    return yt.streams.get_by_itag(18).url
+    try:
+        url = yt.streams.get_by_itag(itag_144p).url
+    except AttributeError:
+        url = yt.streams.get_by_itag(itag_360p).url
+    return url

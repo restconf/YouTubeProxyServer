@@ -6,13 +6,16 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-    {% for i in ids %}
-    <li><img src={{ thumbnails[loop.index0] }}></li>
+    {% for item in list %}
+    <div class={{ item["id"] }}>
+    <p>{{ item["title"] }}</p>
+    <li><img src={{ item["thumb"] }}></li>
     <script>
-        $("body > li:nth-child({{ loop.index }})").click(function (e) {
-            location.href = "/watch?video_id={{ ids[loop.index0] }}&thum_url={{ thumbnails[loop.index0] }}";
+        $(".{{ item["id"] }} > li:nth-child(2) > img:nth-child(1)").click(function (e) {
+            location.href = "/watch?video_id={{ item["id"] }}&thum_url={{ item["thumb"] }}";
         })
     </script>
+    </div>
     {% endfor %}
 </body>
 </html>
