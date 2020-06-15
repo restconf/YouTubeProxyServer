@@ -1,7 +1,7 @@
 ## YouTubeProxyServer
 This app is developed for my close friends.
 
-## To work this perfectly
+## To run this app
 1. create /src/.env and write like this 
 
 ~~~
