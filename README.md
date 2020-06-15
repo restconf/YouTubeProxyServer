@@ -3,14 +3,15 @@ This app is developed for my close friends.
 
 ## To work this perfectly
 1. create /src/.env and write like this 
-"""
+
+~~~
 YOUTUBEAPIKEY=your youtube api key 
 
 VERIFICATION_EMAIL=gmail address 
 
-PASSWORDFOREMAIL=accout password 
+PASSWORDFOREMAIL=google account password 
+~~~
 
-""" 
 You should create new google account because 
 you must disable your security. 
 
@@ -32,8 +33,6 @@ user = models.Registered_User(user_name=username, password=hash256ed password)
 
 models.db.session.add(user) 
 models.db.session.add(user)
-
-app will work well
 
 
 
