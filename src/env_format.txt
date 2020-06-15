@@ -1,0 +1,6 @@
+// Google email to send a validating email to itself
+VERIFICATION_EMAIL=
+// it's password
+PASSWORDFOREMAIL=
+// your API Key of YouTube Data API v3
+YOUTUBEAPIKEY=
