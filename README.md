@@ -24,7 +24,7 @@ addon hobby-dev or better
 
 open heroku console 
 run python code
-> from src import models 
+> from src import models \
 > models.init_db() 
 
 3. add default account into database 
