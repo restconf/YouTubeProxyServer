@@ -1,6 +1,14 @@
 ## YouTubeProxyServer
 This app is developed for my close friends.
 
+## Notice 
+1. If you watch a video through this app, the view count won't increase.
+
+   So, watch a video on YouTube Site whenever you can.
+  
+2. This app will not work on the network which doesn't allow accessing to ~googlevideo.com/
+
+
 ## To run this app
 1. create /src/.env and write like this 
 
