@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Main Page</title>
+    <title>Login Page</title>
 </head>
 <body>
-    <h1>You can avoid the fu*kin' proxy for watching YouTube</h1>
+    <h1>You have to login to use this service.</h1>
     <form action="/login_manager" method="post">
-        <p>ユーザー名：<br>
+        <p>User Name<br>
         <input type="text" name="user_name"></p>
-        <p>パスワード：<br>
+        <p>Password<br>
         <input type="text" name="password"></p>
         <p><input type="submit" value="認証する"></p>
     </form>
+    <h2>Oh, You don't have an account?</h2>
+    <h2>go to the below url to register new account</h2>
+    <p><a href="/register">Register an account</a></p>
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="{{url_for('static', filename='/js/login.js')}}"></script>
 </html>
