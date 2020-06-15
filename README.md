@@ -31,7 +31,7 @@ run python code
 user = models.Registered_User(user_name=username, password=hash256ed password) 
 
 models.db.session.add(user) 
-models.db.session.add(new_user_info)
+models.db.session.add(user)
 
 app will work well
 
