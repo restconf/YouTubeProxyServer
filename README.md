@@ -10,7 +10,7 @@ VERIFICATION_EMAIL=gmail address
 
 PASSWORDFOREMAIL=accout password 
 
-""" \
+""" 
 You should create new google account because 
 you must disable your security. 
 
@@ -26,7 +26,7 @@ run python code
 > from src import models 
 > models.init_db() 
 
-3. add default account into database 
+3. add default account into database \
 user = models.Registered_User(user_name=username, password=hash256ed password) 
 
 models.db.session.add(user) 
