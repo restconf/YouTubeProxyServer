@@ -29,10 +29,10 @@ run python code
 
 3. add default account into database 
 
-user = models.Registered_User(user_name=username, password=hash256ed password) 
+user = models.Registered_User(user_name=[username], password=[hash256ed password]) 
 
 models.db.session.add(user) 
-models.db.session.add(user)
+models.db.session.commit()
 
 
 
