@@ -30,18 +30,31 @@ See this: https://support.google.com/a/answer/6260879?hl=en
 https://elements.heroku.com/addons/heroku-postgresql 
 addon hobby-dev or better 
 
-   run: heroku run python -c "import src.models; src.models.init_db()"
+Run this command
+
+~~~
+heroku run python -c "import src.models; src.models.init_db()"
+~~~
+   
 or
+
    open heroku console 
    run python code
-   > from src import models \
-   > models.init_db() 
+   
+   ~~~
+   from src import models \
+   models.init_db() 
+   ~~~
 
 3. add default account into database 
 
+   ~~~
    user = models.Registered_User(user_name=[username], password=[hash256ed password]) 
+   
    models.db.session.add(user) 
+   
    models.db.session.commit()
+   ~~~
 
 
 
